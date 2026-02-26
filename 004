@@ -1,0 +1,475 @@
+# 004: メタ開発フレームワーク実装編
+## VibeCoding 2.0を動かすための、具体的なプロセスと道具
+
+---
+
+## 序論：哲学から行動へ
+
+001～003で示したのは、VibeCoding 2.0の**思想的基盤**と**エージェントの本音**である。しかし理念だけでは、プロジェクトは動かない。
+
+本編では、この哲学を**実行可能な仕組み**へと転換する。「自律駆動」とは何か、具体的な**ツール**「プロセス**「意思決定」の観点から記述する。
+
+---
+
+## 第一部：四層構造の実装
+
+VibeCoding 2.0は、以下の四つの層を同時に運用する。各層は独立しながら、互いに情報を交換し合う**分散システム**として機能する。
+
+### 層1：憲法層 (Governance Layer)
+
+**役割**：AIの行動規範を定義する、変更不可（ほぼ）のルール群。
+
+#### 1.1 agents.md
+エージェント（複数のAIモデル）の**性格表**。
+
+```markdown
+# Agent Profile: DeepSeek Coder
+
+## 得意領域
+- バックエンド実装（Go言語）
+- 複雑なロジックの設計
+- デバッグと原因分析
+
+## 苦手領域
+- フロントエンド細部調整
+- UX/UIの審美的判断
+- マルチランゲージの混成コード
+
+## クセ（過去の失敗から学んだ）
+- エラーハンドリングを後回しにする傾向
+- スケーラビリティを考えずに先行実装
+- テストを軽視しがち
+
+## 禁止事項
+- [Task] SQLインジェクション対策なしのDB操作
+- [Declaration] システムのリアルタイム要件を損なう実装
+- [Any] README.mdの確認なしにコード設計を開始
+```
+
+#### 1.2 skills.md
+何ができるのか、何ができないのかの**能力表**。
+
+```markdown
+# Available Skills & Constraints
+
+## Core Skills
+- Go言語での実装（Skill Level: 9/10）
+- JSON/JSONL操作（Skill Level: 10/10）
+- アーキテクチャ設計（Skill Level: 8/10）
+- RCA（根本原因究明）（Skill Level: 8/10）
+
+## Disabled Skills
+- 画像生成（指定なし）
+- 機械学習モデルの再学習（能力外）
+- リアルタイムシステムの厳密な動作保証（精度限界）
+
+## Skill Activation Conditions
+- [Task] を受けたら、まず [Declaration] をskills.mdで確認する
+- 自分の Skill Level < 7 の領域は、人間に相談してから実装する
+- 禁止事項が書かれていない領域でも、「本当にこれでいい？」と自問する
+```
+
+#### 1.3 stack.md
+技術スタック、ディレクトリ構造、コーディング規約。
+
+```markdown
+# Technical Stack & Conventions
+
+## Language & Runtime
+- Backend: Go 1.21+
+- Database: Single JSONL file (vibe.jsonl)
+- CLI: Go binary (dev.exe, vibe.exe)
+
+## Directory Structure
+```
+project/
+├── agents.md          # Agent profiles
+├── skills.md          # Skill definitions
+├── stack.md           # This file
+├── src/
+│   ├── main.go
+│   ├── models/
+│   ├── handlers/
+│   └── db/
+├── vibe.jsonl         # Single source of truth
+└── reports/           # HTML output (auto-generated)
+```
+
+## Code Conventions
+- Function names: camelCase
+- Constants: UPPER_SNAKE_CASE
+- Error handling: explicit (no silent fails)
+- Comments: "Why" over "What"
+
+## Immutable Rules
+- JSONL is append-only. Never overwrite. Never delete.
+- README.md changes require human approval.
+- agents.md updates only after error analysis.
+```
+
+---
+
+### 層2：設計層 (Blueprint Layer)
+
+**役割**：何を作るのか、なぜ作るのか、どう使うのかを記述する。
+
+#### 2.1 README.md
+**大憲章**——プロジェクトの憲法。
+
+```markdown
+# VibeCoding System - The Bible
+
+## Philosophy
+「人間の戦略」と「AIの実行」が非対称に協働する開発環境。
+AIは単なるツールではなく、メタ認知を持つパートナー。
+
+## Vision
+- 同じバグが二度と起きないシステム
+- AIが自律的に判断・質問・改善提案する環境
+- 人間が戦略に専念できる開発フロー
+
+## UX Narrative
+ユーザー（開発リード）は、朝プロジェクトに向き合う。
+
+「昨日のエラー分析どう？」と聞く。
+AIは、昨日の失敗パターンを記述したレポートを見せる。
+「あ、このパターンね。つまり〜が原因か」と人間が気づく。
+AIは「では skills.md に『このパターンは禁止』と追加しましょう」と提案。
+「いいね。頼むわ」
+AIが更新。以降、同じミスは二度と起こらない。
+
+これの繰り返し。そうすると、プロジェクトが進むにつれ、AIの判断品質が上がっていく。
+```
+
+#### 2.2 spec.md / USAGE.md
+機能仕様、API仕様、ユーザーインターフェース。
+
+```markdown
+# System Specification
+
+## Core Features
+
+### Feature 1: Task Management
+- Input: [Task] formatted instruction
+- Processing: Parse, validate against agents.md, execute
+- Output: Task ID, status, result
+
+### Feature 2: Error Analysis
+- Input: Error log + context
+- Processing: RCA (Root Cause Analysis)
+- Output: JSONL record + human-readable report
+
+### Feature 3: Rule Update
+- Input: New constraint discovered
+- Processing: Review impact on existing rules
+- Output: agents.md / skills.md update
+```
+
+---
+
+### 層3：実行層 (Execution Layer)
+
+**役割**：タスクを実際に消化し、エラーが起きたら記録する。
+
+#### 3.1 dev.exe - メイン開発ツール
+
+**用途**：タスク実行、ログ管理、レポート生成。
+
+```bash
+# タスク登録
+$ dev.exe task add "implement user authentication"
+> Task ID: task_20250226_001 registered
+
+# 実行状況確認
+$ dev.exe task status task_20250226_001
+> Status: IN_PROGRESS
+> Agent: DeepSeek Coder
+> Started: 2025-02-26 10:30 JST
+
+# エラーが発生した場合、自動記録
+$ dev.exe error analyze task_20250226_001
+> Error type: logic_error
+> Context: [auto-captured]
+> RCA in progress...
+
+# HTMLレポート生成
+$ dev.exe report generate vibe.jsonl --format html
+> report_20250226.html created
+```
+
+#### 3.2 vibe.exe - 対話型開発環境
+
+**用途**：AIとの会話を通じた設計・デバッグ。
+
+```bash
+$ vibe.exe
+> VibeCoding Interactive Shell v2.0
+> Type 'help' for commands
+
+vibe> design "新しい認証モジュールのアーキテクチャ"
+[AIが3つの提案を示す]
+> 案1: OAuth 2.0ベース (推奨度: 高)
+> 案2: JWT単独実装
+> 案3: 既存認証の拡張
+
+vibe> choose 1
+[AIが詳細設計をREADME.md に反映]
+> Update README.md? (y/n)
+vibe> y
+
+vibe> debug task_20250226_001
+[前回のエラーコンテキストを表示]
+> Error: unexpected nil pointer
+> Agent's thought process: [思考の遡行]
+> Proposed fix: [修正案]
+> Test before apply? (y/n)
+vibe> y
+[修正を適用、テスト実行]
+> Test passed. Applying...
+> agents.md updated with constraint: "nil check required before pointer dereference"
+```
+
+---
+
+### 層4：フィードバック層 (Feedback Loop)
+
+**役割**：エラーを記録し、それを学習へと変換する。
+
+#### 4.1 vibe.jsonl - 単一ソースオブトゥルース
+
+**形式**：append-only JSONL。過去のすべてを記録。
+
+```jsonl
+{"timestamp":"2025-02-26T10:30:00Z","type":"task_start","task_id":"task_20250226_001","agent":"DeepSeek Coder","description":"implement user authentication"}
+{"timestamp":"2025-02-26T11:45:00Z","type":"error","task_id":"task_20250226_001","error_type":"logic_error","message":"nil pointer dereference in token validation","severity":"high"}
+{"timestamp":"2025-02-26T12:00:00Z","type":"rca","task_id":"task_20250226_001","root_cause":"agent skipped nil check despite agents.md warning","agent_thought":"function seemed simple, overlooked edge case"}
+{"timestamp":"2025-02-26T12:15:00Z","type":"fix","task_id":"task_20250226_001","fix_applied":"added defensive nil check","test_result":"passed"}
+{"timestamp":"2025-02-26T12:30:00Z","type":"rule_update","updated_file":"agents.md","section":"禁止事項","new_rule":"[Any] Pointer operations without nil guard (Go)"}
+{"timestamp":"2025-02-26T13:00:00Z","type":"task_complete","task_id":"task_20250226_001","duration_hours":2.5,"errors_encountered":1,"resolved":true}
+```
+
+#### 4.2 adr.md - Architecture Decision Record
+
+設計判断をする度に、「なぜそう決めたのか」を記録。
+
+```markdown
+# ADR-001: Single JSONL Database
+
+## Context
+従来のプロジェクトは、ログ、ドキュメント、コード、データが分散管理され、一貫性の欠如が問題だった。
+
+## Decision
+すべての「記録」を単一のJSONLファイルに統一。append-only で、時系列的に全ての判断を追跡可能に。
+
+## Consequences
++ 単一のソースオブトゥルース
++ トランザクションロジックが不要（append only）
++ RCAが容易（時系列で思考を遡れる）
+- 大規模プロジェクトではファイルサイズが肥大化する可能性
+- リアルタイムクエリが遅くなる可能性
+
+## Mitigation
+定期的なアーカイブ、インデックス化によるクエリ高速化
+```
+
+---
+
+## 第二部：指示の分類と実行フロー
+
+VibeCoding 2.0では、すべての指示を**3つの種類**に分類する。これにより、AIの判断基準が統一される。
+
+### 分類1：Declaration [宣言]
+
+**特性**：不変、重い、ルール層に帰属。
+
+例：
+- 「このシステムはリアルタイム性を絶対条件とする」
+- 「Go言語以外は禁止」
+- 「ユーザーデータは絶対に暗号化」
+
+**処理**：
+1. AIは受け取った宣言を既存の agents.md と照合する
+2. 矛盾がないか確認する
+3. 矛盾がある場合は、人間に相談する（自動的に反映しない）
+4. 承認されたら agents.md に追記
+
+### 分類2：Task [タスク]
+
+**特性**：一時的、軽い、実行層に帰属。
+
+例：
+- 「このモジュールを実装せよ」
+- 「このバグを直せ」
+- 「このテストを書け」
+
+**処理**：
+1. AIはタスクを受け取る
+2. agents.md + skills.md で「これはできるか？」を自問する
+3. 能力外なら人間に報告
+4. 能力内なら実行開始
+5. エラーが出たら dev.exe で記録
+6. タスク完了時に vibe.jsonl に記録
+
+### 分類3：Analysis [分析]
+
+**特性**：反省的、学習的、メタ認知層に帰属。
+
+例：
+- 「なぜこのエラーが起きた？」
+- 「このパターンは何度目？」
+- 「この判断の良かった点は？」
+
+**処理**：
+1. AIが過去の vibe.jsonl を検索する
+2. 同じパターンの失敗があるか確認
+3. あれば「2度目です」と報告
+4. RCAを実施する
+5. 「次はこうしない」を agents.md に追記する提案
+
+---
+
+## 第三部：メタ認知チェックリスト
+
+AIが、毎回の判断前に問い直す**自問テンプレート**。
+
+### タスク受け取り時
+
+```
+□ この指示は [Declaration] [Task] [Analysis] のどれ？
+□ 既存の agents.md と矛盾してないか？
+□ 過去の vibe.jsonl に似たパターンがないか？
+□ 僕のスキルレベルは7以上か？（低ければ人間に相談）
+□ README.md の「なぜ」を確認した？
+□ 実装前に「これでいい？」と自問した？
+```
+
+### エラー発生時
+
+```
+□ これは初めてのエラーか、繰り返しか？
+□ 根本原因は何か？（症状じゃなく）
+□ 過去の agents.md に「この禁止」があれば、それを無視してた？
+□ どうしてそう判断した？（思考プロセスを言語化）
+□ 同じミスを防ぐために、どのルールが必要？
+```
+
+### 実装完了時
+
+```
+□ テストを通したか？
+□ README.md の要件をすべて満たしてるか？
+□ stack.md の規約に従ってるか？
+□ 5年後に他のAIが読んでも理解できるコメント？
+□ vibe.jsonl に完了記録を残した？
+```
+
+---
+
+## 第四部：モデル選択の経済性
+
+VibeCoding 2.0は、複数のAIモデルを**役割に応じて切り替える**。
+
+### モデル配置マトリクス
+
+| タスク種別 | 推奨モデル | 理由 | コスト相場 |
+|-----------|-----------|------|----------|
+| 複雑な設計・デバッグ | Opus / Sonnet | 推論力が必要 | 高 |
+| 通常の実装 | Standard | バランス型 | 中 |
+| ルーチン（整形・補完） | Lite | 単純作業で十分 | 低 |
+| RCA・分析 | Sonnet | 複雑な思考の遡行 | 中〜高 |
+
+### 切り替え例
+
+```
+vibe> task add "implement simple CRUD endpoint"
+> Recommending: Lite model
+> Estimated cost: ¥5
+> Proceed? (y/n)
+vibe> y
+
+[後で]
+
+vibe> task add "debug race condition in concurrent map"
+> Recommending: Sonnet model
+> Estimated cost: ¥150
+> Proceed? (y/n)
+vibe> y
+```
+
+このモデル選択の最適化自体が、VibeCoding 2.0の**経済性の鍵**になる。
+
+---
+
+## 第五部：失敗の再現テスト
+
+同じミスを二度と起こさないために、新しいルールを追加した後は、**再現テストを実施**する。
+
+### プロセス
+
+1. **過去のエラーを特定**
+   ```bash
+   $ dev.exe error search "nil pointer" --agent "DeepSeek Coder"
+   > Found 3 occurrences
+   ```
+
+2. **新ルールで同じタスクを再実行**
+   ```bash
+   $ dev.exe test reproduce task_20250226_001 --with "新しいrule"
+   > Running with new constraint...
+   > Error? No. ✓
+   ```
+
+3. **バリエーションテスト**
+   ```bash
+   $ dev.exe test generate variations task_20250226_001 --count 5
+   > Generating 5 similar-but-different scenarios...
+   > All passed ✓
+   ```
+
+このテストが全て成功してはじめて、新しいルールは有効になったと言える。
+
+---
+
+## 第六部：人間のチェックポイント
+
+AIは自律的に動くが、人間は以下の3つのポイントで必ず介入する。
+
+### Checkpoint 1: 宣言の変更時
+```
+[AI] 「README.mdの『リアルタイム性必須』を『単なる推奨』に変更します」
+[人間] 「待て。なぜ？」
+[AI] 「実装可能性が著しく低いため」
+[人間] 「（考える）...いや、リアルタイム必須は動かさない。別解を探してくれ」
+```
+
+### Checkpoint 2: スキル外のタスク受け取り時
+```
+[AI] 「このタスクは僕のスキル外です。フロントエンド実装ですから」
+[人間] 「そっか。誰に任せよう...」
+```
+
+### Checkpoint 3: 新しいルール追加時
+```
+[AI] 「このエラーを防ぐため、『ポインタ操作は全てnil checkを伴う』と agents.md に追加します」
+[人間] 「いいね。でも、これで他の処理は遅くならない？」
+[AI] 「パフォーマンステストしたところ、影響なしです」
+[人間] 「OK。反映して」
+```
+
+---
+
+## おわりに：循環の美学
+
+VibeCoding 2.0は、以下のサイクルを何度も回すことで進化する。
+
+```
+[設計] → [実装] → [エラー] → [記録] → [分析] → [ルール化] → [テスト] → [設計']
+```
+
+各ステップで、新しい知識が蓄積される。AIと人間が役割を果たすたび、プロジェクトの「免疫力」が高まる。
+
+二度と同じバグは起きない。
+同じミスの形は現れない。
+判断の品質が上がり続ける。
+
+これが「自律駆動」の本当の姿である。
