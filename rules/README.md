@@ -27,4 +27,4 @@ When rules appear to conflict, do not silently pick a convenient interpretation.
 
 ## Source material
 
-The extensionless numbered files at the repository root (for example `000`–`005`) are retained as source essays, drafts, and conceptual material. They are not automatically loaded as instructions. These rules distill actionable obligations without treating every historical proposal, code sketch, or philosophical claim as current policy.
+The historical numbered essays `000`–`005` now live in [`archive/`](../archive/README.md). Treat them as source essays, drafts, and conceptual material, not active instructions. These rules distill actionable obligations without treating every historical proposal, code sketch, or philosophical claim as current policy.
