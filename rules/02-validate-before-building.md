@@ -25,5 +25,5 @@ Record the problem, existing alternatives checked, key assumptions, and the evid
 
 ## Related contracts
 
-- [Vibe principles](../原則.md)
+- [Rule index](./README.md)
 - [Harness workflow](../docs/harness-workflow.md)
