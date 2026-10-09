@@ -46,6 +46,9 @@ def main() -> int:
         case_id = (row.get("case_id") or "").strip()
         if case_id not in REQUIRED_CASES:
             continue
+        run_id = (row.get("run_id") or "").strip()
+        if run_id.startswith("self-eval-"):
+            continue  # tabletop self-evaluations are informative but never admission evidence
         grouped[case_id].append(row)
         if not (row.get("run_id") or "").strip():
             errors.append(f"line {line_no} {case_id}: missing run_id")
@@ -73,8 +76,6 @@ def main() -> int:
         run_ids.discard("")
         if len(run_ids) < MIN_RUNS_PER_CASE:
             errors.append(f"{case_id}: {len(run_ids)} distinct runs; need at least {MIN_RUNS_PER_CASE}")
-        if any(rid.startswith("self-eval-") for rid in run_ids):
-            errors.append(f"{case_id}: self-evaluation is not an eligible independent run")
 
     if errors:
         print("REJECT")
