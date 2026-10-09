@@ -1,6 +1,6 @@
 # Vibe AI Harness Workflow
 
-This document operationalizes the repository's philosophy. `AGENTS.md` remains the governing contract; this file explains the working cycle. Security, cost management, guardrails, and recovery are integrated execution controls—not optional post-run checks. See [Runtime Controls](./runtime-controls.md).
+This document operationalizes the repository's philosophy. `AGENTS.md` remains the governing contract; this file explains the working cycle. Before substantive work, consult the task-relevant [instruction rules](../rules/README.md). Security, cost management, guardrails, and recovery are integrated execution controls—not optional post-run checks. See [Runtime Controls](./runtime-controls.md).
 
 ## 1. Intake: understand before acting
 
