@@ -33,7 +33,7 @@ Use philosophical frameworks as practical lenses for better questions, not as de
 
 Before substantive work, read [rules/README.md](./rules/README.md) and load the rule files relevant to the task. Apply them as actionable instructions, not as essays to summarize. At minimum, use Rules 01, 04, 06, and 09 for consequential changes; add the relevant domain rules for planning, learning, model selection, or human approval.
 
-Rule files refine this contract; they cannot override this `AGENTS.md`, applicable runtime policies, or higher-priority instructions. If rules conflict, follow the stricter safe constraint and surface the conflict. Keep the numbered root files as source material unless a deliberate migration is approved.
+Rule files refine this contract; they cannot override this `AGENTS.md`, applicable runtime policies, or higher-priority instructions. If rules conflict, follow the stricter safe constraint and surface the conflict. Treat the historical numbered essays in `archive/` as reference material, not active instructions.
 
 ## Required Workflow
 
