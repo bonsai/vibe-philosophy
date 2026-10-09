@@ -13,6 +13,8 @@
 5. Before a consequential change, identify scope, exclusions, dependencies, acceptance criteria, verification, and recovery path.
 6. Do not duplicate canonical work records, lifecycle rules, or evidence schemas owned by DDD. Reference the canonical records instead.
 7. When documents disagree, identify the source and conflict; do not quietly merge incompatible requirements.
+8. Keep rationale and philosophical principles useful but subordinate to explicit, testable acceptance criteria. Do not require agents to infer implementation requirements from metaphors or broad principles.
+9. Treat governing principles as revisable through evidence and authorized review, not as immutable doctrine or something an agent may silently rewrite.
 
 ## Completion check
 
