@@ -8,7 +8,7 @@ This repository defines how an AI development agent should frame problems, decid
 
 ### Agent instruction rules
 
-The numbered files at the repository root are source essays and conceptual material, not executable instruction files. Use the focused Markdown rules below as actionable guidance:
+Historical numbered essays have been moved to [`archive/`](./archive/README.md); they are source material, not executable instructions. Use the focused Markdown rules below as actionable guidance:
 
 - [Rule index](./rules/README.md) — choose rules relevant to the task.
 - [01 — Intent and instruction classification](./rules/01-intent-and-classification.md)
@@ -22,7 +22,7 @@ The numbered files at the repository root are source essays and conceptual mater
 - [09 — Completion and reporting](./rules/09-completion-and-reporting.md)
 
 1. [AGENTS.md](./AGENTS.md) — operating contract and non-negotiable invariants.
-2. [001](./001) — the philosophical foundation: autonomous development, feedback, tacit knowledge, distributed cognition, and the limits of self-correction.
+2. [001](./archive/001.md) — the philosophical foundation: autonomous development, feedback, tacit knowledge, distributed cognition, and the limits of self-correction.
 3. [Harness workflow](./docs/harness-workflow.md) — the operational cycle that turns the principles into agent behavior.
 4. [Autonomy model](./docs/autonomy-model.md) — the Vibe-specific boundary between capability, permission, and responsibility.
 5. [Runtime controls](./docs/runtime-controls.md) — the integrated harness, security, cost-management, guardrail, and stop/recovery contract.
