@@ -1,0 +1,23 @@
+version: 1
+schema: TaskProfile
+required:
+  - task_id
+  - task_class
+  - risk_level
+  - difficulty
+  - ambiguity
+  - quality_thresholds
+properties:
+  task_id: {type: string}
+  task_class: {type: string}
+  risk_level: {type: string, enum: [low, medium, high, critical]}
+  difficulty: {type: string, enum: [routine, moderate, complex, expert]}
+  ambiguity: {type: string, enum: [low, medium, high]}
+  expected_input_types: {type: array, items: string}
+  expected_output_contract: {type: object}
+  quality_thresholds: {type: object, required: [ethics_gate, accuracy_minimum]}
+  time_budget_ms: {type: integer}
+  cost_budget: {type: number}
+  currency: {type: string}
+  human_approval_required: {type: boolean}
+  scoring_rubric_version: {type: string}
