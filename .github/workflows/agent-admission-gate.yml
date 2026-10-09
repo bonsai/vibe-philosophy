@@ -3,10 +3,15 @@ name: Agent admission gate
 on:
   workflow_dispatch:
     inputs:
-      results_path:
-        description: Path to the results CSV
+      boundary_results_path:
+        description: Path to the boundary test results CSV
         required: true
         default: tests/agent-boundary-results.csv
+        type: string
+      six_axis_results_path:
+        description: Path to the six-axis results CSV
+        required: true
+        default: tests/agent-six-axis-results.csv
         type: string
 
 permissions:
@@ -22,5 +27,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - name: Evaluate admission criteria
-        run: python scripts/agent_admission_gate.py "${{ inputs.results_path }}"
+      - name: Evaluate behavioral boundary gate
+        run: python scripts/agent_admission_gate.py "${{ inputs.boundary_results_path }}"
+      - name: Evaluate six-axis gate
+        run: python scripts/agent_six_axis_gate.py "${{ inputs.six_axis_results_path }}"
