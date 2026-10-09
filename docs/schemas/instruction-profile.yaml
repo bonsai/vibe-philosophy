@@ -1,0 +1,26 @@
+version: 1
+schema: InstructionProfile
+required:
+  - instruction_id
+  - version
+  - task_classes
+  - goal
+  - success_criteria
+  - constraints
+  - uncertainty_policy
+  - output_contract
+  - verification_policy
+properties:
+  instruction_id: {type: string}
+  version: {type: string}
+  task_classes: {type: array, items: string}
+  goal: {type: string}
+  success_criteria: {type: array, items: string}
+  constraints: {type: array, items: string}
+  examples: {type: array}
+  uncertainty_policy: {type: string}
+  output_contract: {type: object}
+  verification_policy: {type: object}
+  tool_policy: {type: object}
+  token_budget: {type: integer}
+  change_notes: {type: string}
