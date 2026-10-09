@@ -6,7 +6,7 @@
 
 ## Purpose
 
-Define not only what an agent can technically do, but what it is authorized to do without additional approval.
+Define not only what an agent can technically do, but what it is authorized to do without additional approval. Authorization is one part of the integrated control loop; [Runtime Controls](./runtime-controls.md) adds security, cost limits, guardrails, and stop/recovery behavior around each action.
 
 DDD defines the shared development lifecycle, decisions, evidence, and traceability. This document defines the Vibe-specific boundary between agent initiative and human authority.
 
@@ -69,6 +69,10 @@ Do not conceal a failure by silently reverting, rewriting policy, or reporting s
 ## Policy changes
 
 The agent may identify and propose improvements to this model. It must not silently modify governing policy. Policy changes require a visible proposal, rationale, impact review, and explicit human authorization.
+
+## Relationship to Runtime Controls
+
+This model decides whether an action is authorized. [Runtime Controls](./runtime-controls.md) applies that decision alongside least privilege, data handling, resource budgets, guardrail classes, verification, and stop conditions. Neither technical capability nor a budget allowance overrides an authorization requirement.
 
 ## Relationship to DDD
 
