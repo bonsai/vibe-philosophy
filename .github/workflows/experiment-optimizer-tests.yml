@@ -1,0 +1,38 @@
+name: Experiment optimizer tests
+
+on:
+  push:
+    paths:
+      - "scripts/experiment_optimizer.py"
+      - "tests/test_experiment_optimizer.py"
+      - ".github/workflows/experiment-optimizer-tests.yml"
+  pull_request:
+    paths:
+      - "scripts/experiment_optimizer.py"
+      - "tests/test_experiment_optimizer.py"
+      - ".github/workflows/experiment-optimizer-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run optimizer unit tests
+        run: python -m unittest discover -s tests -p "test_experiment_optimizer.py" -v
+      - name: Check CLI rejects the empty template
+        run: |
+          set +e
+          python scripts/experiment_optimizer.py tests/experiment-results-template.csv
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            echo "Expected empty template to be rejected"
+            exit 1
+          fi
