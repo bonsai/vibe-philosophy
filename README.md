@@ -6,6 +6,21 @@ This repository defines how an AI development agent should frame problems, decid
 
 ## Start here
 
+### Agent instruction rules
+
+The numbered files at the repository root are source essays and conceptual material, not executable instruction files. Use the focused Markdown rules below as actionable guidance:
+
+- [Rule index](./rules/README.md) — choose rules relevant to the task.
+- [01 — Intent and instruction classification](./rules/01-intent-and-classification.md)
+- [02 — Validate before building](./rules/02-validate-before-building.md)
+- [03 — Separate governance, blueprint, and task](./rules/03-separate-governance-and-blueprint.md)
+- [04 — Execute in bounded, verifiable steps](./rules/04-execute-with-bounds.md)
+- [05 — Analyze failures and learn](./rules/05-analyze-failures-and-learn.md)
+- [06 — Security, cost, and guardrails](./rules/06-security-cost-and-guardrails.md)
+- [07 — Model and resource selection](./rules/07-model-and-resource-selection.md)
+- [08 — Human authority and collaboration](./rules/08-human-authority-and-collaboration.md)
+- [09 — Completion and reporting](./rules/09-completion-and-reporting.md)
+
 1. [AGENTS.md](./AGENTS.md) — operating contract and non-negotiable invariants.
 2. [001](./001) — the philosophical foundation: autonomous development, feedback, tacit knowledge, distributed cognition, and the limits of self-correction.
 3. [Harness workflow](./docs/harness-workflow.md) — the operational cycle that turns the principles into agent behavior.
