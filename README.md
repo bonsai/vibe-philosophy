@@ -27,7 +27,7 @@ Historical numbered essays have been moved to [`archive/`](./archive/README.md);
 4. [Autonomy model](./docs/autonomy-model.md) — the Vibe-specific boundary between capability, permission, and responsibility.
 5. [Runtime controls](./docs/runtime-controls.md) — the integrated harness, security, cost-management, guardrail, and stop/recovery contract.
 6. [Skill learning](./docs/skill-learning.md) — how evidence becomes a reusable skill without turning one-off failures into universal rules.
-7. [Vibe principles](./原則.md) — how to judge value, decide whether to build, and connect AI work to real-world outcomes.
+7. The core principles are embedded in Rules 01, 02, 03, 05, 06, 08, and 09: validate value before building, connect observation to decisions and feedback, respect human authority and real-world limits, and update assumptions from evidence.
 
 ## Relationship to DDD
 
