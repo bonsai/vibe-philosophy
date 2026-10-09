@@ -15,6 +15,8 @@
 8. Promote lessons into reusable skills only through the review process in [Skill Learning](../docs/skill-learning.md).
 9. Never silently modify governing policy, increase autonomy, widen permissions, or raise budgets as a result of a failure or success.
 10. Record findings using existing DDD evidence and decision mechanisms instead of inventing a parallel source of truth.
+11. Turn failure into learning by locating which assumption, hypothesis, execution step, observation, or evaluation criterion failed; preserve the lesson in a reusable form only when supported by evidence.
+12. Revisit success criteria when repeated real-world results suggest the metric itself is incomplete or misaligned, rather than optimizing a proxy without question.
 
 ## Completion check
 
