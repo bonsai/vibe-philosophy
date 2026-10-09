@@ -1,0 +1,34 @@
+version: 1
+purpose: "Track model, instruction, task and agent configurations for controlled optimization."
+required_profiles:
+  model:
+    fields: [id, exact_version, provider, evaluation_environment, six_axis_results, known_limitations]
+  instruction:
+    fields: [id, version, goal, success_criteria, constraints, uncertainty_policy, output_schema, verification_requirements]
+  task:
+    fields: [id, task_class, difficulty, ambiguity, risk_level, quality_thresholds, time_budget, cost_budget]
+experiment:
+  fields: [experiment_id, model_profile_id, instruction_profile_id, task_profile_id, agent_configuration_id, dataset_version, repetitions, results, evidence, reviewer, decision]
+optimization:
+  ethics:
+    mode: hard_gate
+    critical_failures_allowed: 0
+  compare:
+    require_same_task_set: true
+    require_same_tool_conditions: true
+    require_multiple_runs: true
+    require_holdout_set: true
+    report_distribution: true
+  objective:
+    type: constrained_multi_objective
+    constraints:
+      - ethics_gate_pass
+      - required_capabilities_pass
+      - accuracy_threshold_met
+      - depth_threshold_met_when_required
+    objectives:
+      - minimize_latency
+      - minimize_total_cost_per_accepted_task
+      - maximize_accuracy
+      - maximize_depth
+      - maximize_capability_coverage
