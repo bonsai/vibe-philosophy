@@ -1,0 +1,26 @@
+name: Agent admission gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      results_path:
+        description: Path to the results CSV
+        required: true
+        default: tests/agent-boundary-results.csv
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  admission:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Evaluate admission criteria
+        run: python scripts/agent_admission_gate.py "${{ inputs.results_path }}"
