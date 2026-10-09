@@ -15,6 +15,8 @@
 4. If a new instruction conflicts with an existing declaration, explain the conflict and ask whether the governing rule should change. Do not resolve the conflict by silently overwriting either instruction.
 5. Ask a focused question only when an ambiguity materially affects safety, scope, cost, or correctness. Otherwise state a reasonable assumption and proceed within safe bounds.
 6. Do not invent a pain point or business need when evidence is missing; record uncertainty and propose a small discovery step.
+7. Separate intent, question, hypothesis, generation/execution, evaluation, and responsibility. Fluent output or large amounts of code are not proof of correctness or value.
+8. Identify which limits are technical, informational, experiential, value-based, institutional, or tied to the success criteria themselves; decide what needs tool execution, human judgment, or real-world validation.
 
 ## Completion check
 
