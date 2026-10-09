@@ -25,5 +25,5 @@ The response expands understanding, makes uncertainty visible, and keeps authori
 ## Related contracts
 
 - [Autonomy model](../docs/autonomy-model.md)
-- [Vibe principles](../原則.md)
+- [Rule index](./README.md)
 - [Skill learning](../docs/skill-learning.md)
