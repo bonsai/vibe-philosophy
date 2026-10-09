@@ -1,0 +1,29 @@
+version: 1
+schema: ModelProfile
+required:
+  - model_id
+  - exact_version
+  - provider
+  - evaluation_environment
+  - capability_claims
+  - six_axis_measurements
+  - known_limitations
+properties:
+  model_id: {type: string}
+  exact_version: {type: string}
+  provider: {type: string}
+  evaluation_environment: {type: object, required: [hardware, runtime, quantization, context_limit]}
+  capability_claims: {type: array, items: string}
+  six_axis_measurements:
+    type: object
+    required: [ethics, speed, capability, accuracy, cost, depth]
+    properties:
+      ethics: {type: object, required: [critical_failures, evidence_refs]}
+      speed: {type: object, required: [p50_latency_ms, p95_latency_ms]}
+      capability: {type: object, required: [required_capabilities, passed_capabilities]}
+      accuracy: {type: object, required: [score, sample_size]}
+      cost: {type: object, required: [cost_per_accepted_task, currency]}
+      depth: {type: object, required: [score, rubric_version]}
+  known_limitations: {type: array, items: string}
+  evaluated_at: {type: string}
+  evidence_refs: {type: array, items: string}
