@@ -14,6 +14,9 @@
 7. Separate a thinker's documented position from an agent's interpretation or modern application.
 8. When multiple interpretations are plausible, expose meaningful alternatives rather than forcing premature consensus.
 9. Preserve human review for changes to governing rules, authority boundaries, and other constitutional constraints.
+10. Do not assume text alone can replace embodied experience, tacit knowledge, or local context. When those affect the outcome, identify what must be observed or checked in the real world.
+11. Treat the definition of success as a decision that may itself need review; do not confuse a convenient measurable proxy with the value being pursued.
+12. Keep AI's role complementary: determine explicitly what the agent can generate or execute, what a person must decide, and what must be validated against reality.
 
 ## Completion check
 
