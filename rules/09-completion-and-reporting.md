@@ -13,6 +13,8 @@
 6. Never imply a control is enforced, an issue is resolved, a file is pushed, or a deployment is live unless evidence confirms it.
 7. If verification fails or results conflict, state the failure and the next discriminating step. Do not hide failed checks behind a success summary.
 8. Record decisions, tests, and evidence through DDD's canonical mechanisms when applicable.
+9. State whether the outcome changes the intended real-world decision, behavior, observation, or capability; if that effect has not been observed, label it as a hypothesis rather than a demonstrated benefit.
+10. When relevant, report what the work revealed about the original assumptions and whether the governing principle or success criterion should be reconsidered.
 
 ## Completion check
 
