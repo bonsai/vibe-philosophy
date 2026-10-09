@@ -6,16 +6,19 @@ This repository defines how an AI development agent should frame problems, decid
 
 ## Start here
 
-1. [`AGENTS.md`](./AGENTS.md) — operating contract and non-negotiable invariants.
-2. [`001`](./001) — the philosophical foundation: autonomous development, feedback, tacit knowledge, distributed cognition, and the limits of self-correction.
+1. [AGENTS.md](./AGENTS.md) — operating contract and non-negotiable invariants.
+2. [001](./001) — the philosophical foundation: autonomous development, feedback, tacit knowledge, distributed cognition, and the limits of self-correction.
 3. [Harness workflow](./docs/harness-workflow.md) — the operational cycle that turns the principles into agent behavior.
 4. [Autonomy model](./docs/autonomy-model.md) — the Vibe-specific boundary between capability, permission, and responsibility.
-5. [Skill learning](./docs/skill-learning.md) — how evidence becomes a reusable skill without turning one-off failures into universal rules.
-6. [Vibe principles](./原則.md) — how to judge value, decide whether to build, and connect AI work to real-world outcomes.
+5. [Runtime controls](./docs/runtime-controls.md) — the integrated harness, security, cost-management, guardrail, and stop/recovery contract.
+6. [Skill learning](./docs/skill-learning.md) — how evidence becomes a reusable skill without turning one-off failures into universal rules.
+7. [Vibe principles](./原則.md) — how to judge value, decide whether to build, and connect AI work to real-world outcomes.
 
 ## Relationship to DDD
 
-[DDD](https://github.com/bonsai/DDD/tree/main/docs) owns the shared development method: Issues, Documents, decisions, evidence, tests, lifecycle, and traceability. This repository does not duplicate those models. It adds the Vibe-specific philosophy, autonomy boundaries, and skill-learning policy.
+[DDD](https://github.com/bonsai/DDD/tree/main/docs) owns the shared development method and canonical work records: Issues, Documents, Decisions, Tests, Evidence, lifecycle, and traceability. This repository complements DDD with Vibe-specific agent behavior, autonomy, runtime control policy, and skill learning. It does not duplicate DDD's record schemas or lifecycle.
+
+The runtime-control contract is integrated rather than four separate checklists: the harness coordinates execution; autonomy determines authority; security limits access and data exposure; cost management bounds resource use; guardrails define allowed, approval-required, and prohibited actions. All apply before, during, and after execution.
 
 ## The harness loop
 
@@ -26,9 +29,11 @@ CHECK EXISTING SOLUTIONS + VALIDATE PAIN
   ↓
 DECLARATION (invariants) + BLUEPRINT (desired outcome)
   ↓
+AUTHORIZE SCOPE + SET SECURITY / COST LIMITS
+  ↓
 TASK (bounded change)
   ↓
-EXECUTION
+EXECUTION UNDER GUARDRAILS
   ↓
 VERIFICATION (evidence)
   ↓
@@ -57,12 +62,14 @@ LEARNING (reviewed reusable skills)
 - **Keep policy separate from work:** governing declarations should not be mixed with task instructions.
 - **Make feedback inspectable:** retain the evidence behind conclusions.
 - **Learn cautiously:** a failure is a signal, not proof of a universal rule.
-- **Bound autonomy:** agents can propose improvements, but cannot silently change their own governing contract.
+- **Bound autonomy:** agents can propose improvements, but cannot silently change their governing contract.
+- **Enforce least privilege and bounded cost:** tool access is not authorization; budgets and approval gates must apply throughout execution.
+- **Stop safely:** ambiguity, policy conflict, suspected exposure, budget exhaustion, or unexplained side effects must halt the affected action.
 - **Keep philosophy practical:** use thinkers as lenses for inquiry, not as role-play personas or substitutes for evidence.
 
 ## Scope
 
-This repository owns philosophy, agent behavior contracts, autonomy boundaries, skill-learning rules, and the Vibe harness workflow. Runtime code and provider-specific integrations belong in implementation repositories.
+This repository owns philosophy, agent behavior contracts, autonomy boundaries, runtime-control policy, skill-learning rules, and the Vibe harness workflow. Runtime code and provider-specific integrations belong in implementation repositories.
 
 ## Language
 
