@@ -9,6 +9,13 @@ This repository defines how an AI development agent should frame problems, decid
 1. [`AGENTS.md`](./AGENTS.md) — operating contract and non-negotiable invariants.
 2. [`001`](./001) — the philosophical foundation: autonomous development, feedback, tacit knowledge, distributed cognition, and the limits of self-correction.
 3. [Harness workflow](./docs/harness-workflow.md) — the operational cycle that turns the principles into agent behavior.
+4. [Autonomy model](./docs/autonomy-model.md) — the Vibe-specific boundary between capability, permission, and responsibility.
+5. [Skill learning](./docs/skill-learning.md) — how evidence becomes a reusable skill without turning one-off failures into universal rules.
+6. [Vibe principles](./原則.md) — how to judge value, decide whether to build, and connect AI work to real-world outcomes.
+
+## Relationship to DDD
+
+[DDD](https://github.com/bonsai/DDD/tree/main/docs) owns the shared development method: Issues, Documents, decisions, evidence, tests, lifecycle, and traceability. This repository does not duplicate those models. It adds the Vibe-specific philosophy, autonomy boundaries, and skill-learning policy.
 
 ## The harness loop
 
@@ -55,7 +62,7 @@ LEARNING (reviewed reusable skills)
 
 ## Scope
 
-This repository owns philosophy, agent behavior contracts, and the harness workflow. Runtime code and provider-specific integrations belong in implementation repositories.
+This repository owns philosophy, agent behavior contracts, autonomy boundaries, skill-learning rules, and the Vibe harness workflow. Runtime code and provider-specific integrations belong in implementation repositories.
 
 ## Language
 
