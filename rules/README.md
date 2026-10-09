@@ -1,6 +1,6 @@
 # Vibe AI Instruction Rules
 
-These files turn the repository's numbered philosophy and design material into focused, actionable agent instructions. Load only the rules relevant to the current task; for consequential changes, always load Rules 01, 04, 06, and 09.
+These files contain the repository's operative, focused agent instructions. The former `原則.md` has been distilled into the relevant rules; no separate principle document is required. Load only the rules relevant to the current task; for consequential changes, always load Rules 01, 04, 06, and 09.
 
 ## Rules
 
