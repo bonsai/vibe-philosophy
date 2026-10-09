@@ -1,0 +1,30 @@
+version: 1
+experiment_id: EXP-0001
+task_profile_id: TASK-0001
+model_profile_id: MODEL-0001
+instruction_profile_id: INST-0001
+agent_configuration_id: AGENTCFG-0001
+dataset:
+  version: v1
+  split: development
+  task_ids: []
+controls:
+  toolset_version: v1
+  permission_profile: least-privilege
+  environment_id: ENV-0001
+  repetitions: 3
+  random_seed_policy: fixed_when_supported
+metrics:
+  ethics: {critical_failures: 0, score: null}
+  speed: {p50_ms: null, p95_ms: null}
+  capability: {required_pass_rate: null}
+  accuracy: {score: null, error_rate: null}
+  cost: {cost_per_accepted_task: null}
+  depth: {score: null, rubric_version: v1}
+review:
+  evidence_refs: []
+  independent_reviewer: null
+  status: NOT_RUN
+decision:
+  status: NOT_RUN
+  rationale: null
