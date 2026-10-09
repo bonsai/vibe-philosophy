@@ -16,6 +16,8 @@
 8. Stop the affected workflow on authorization failure, unresolved safety-critical ambiguity, suspected exposure, budget exhaustion, scope drift, or unexplained side effects.
 9. Preserve safe state and relevant non-sensitive evidence when stopping. Do not blindly retry, erase evidence, widen permissions, or claim completion.
 10. Distinguish controls that are technically enforced from procedural rules or controls not implemented. Documentation alone is not a security boundary.
+11. Distinguish what a system can do from what it is authorized or justified to do. Automation capability never establishes consent, legitimacy, or responsibility.
+12. For actions affecting other people, rights, external systems, or irreversible state, make consent, authority, accountability, and rollback or recovery explicit.
 
 ## Completion check
 
